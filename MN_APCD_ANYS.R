@@ -26,7 +26,7 @@ library(dplyr); library(ggplot2)
 diag <- mutate(diag, IND = TOTAL_PAID / DISTINCT_MEMBERS) 
 util <- mutate(util, IND = TOTAL_PAID / DISTINCT_MEMBERS)
 
-# subset and split data
-diagmn <- aggregate(diag$IND, list(diag$DX1_CODE, diag$IND), mean)
+# subset and aggregate data
 diagred <- select(diag, DX1_CODE, IND)
-spdiag <- split(diagred, diag$DX1_CODE)
+diagmn <- aggregate(diagred$IND, list(diag$DX1_CODE), mean)
+#spdiag <- split(diagred, diag$DX1_CODE)
