@@ -26,7 +26,13 @@ library(dplyr); library(ggplot2)
 diag <- mutate(diag, IND = TOTAL_PAID / DISTINCT_MEMBERS) 
 util <- mutate(util, IND = TOTAL_PAID / DISTINCT_MEMBERS)
 
-# subset and aggregate data
+# subset, aggregate data, and add distance metrics
 diagred <- select(diag, DX1_CODE, IND)
-diagmn <- aggregate(diagred$IND, list(diag$DX1_CODE), mean)
-#spdiag <- split(diagred, diag$DX1_CODE)
+diagTOT <- select(diag, DX1_CODE, TOTAL_PAID)
+diagmn <- aggregate(diagred$IND, list(diagred$DX1_CODE), mean)
+diagsm <- aggregate(diagTOT$TOTAL_PAID, list(diag$DX1_CODE), sum)
+diagmn <- rename(diagmn, DX1_CODE = Group.1, INDMN = x)
+diagsm <- rename(diagsm, DX1_CODE = Group.1, TOTSUM = x)
+diag <- inner_join(diag,diagmn, by = "DX1_CODE")
+diag <- inner_join(diag,diagsm, by = "DX1_CODE")
+diag <- mutate(diag, Dist = (IND - INDMN) / TOTSUM)
