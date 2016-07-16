@@ -48,3 +48,11 @@ utilsm <- rename(utilsm, UTILIZATION_CATEGORY = Group.1, TOTSUM = x)
 util <- inner_join(util,utilmn, by = "UTILIZATION_CATEGORY")
 util <- inner_join(util,utilsm, by = "UTILIZATION_CATEGORY")
 util <- mutate(util, Dist = (IND - INDMN) / TOTSUM)
+
+################## Analysis ###################
+# order the data by distance
+diag <- arrange(diag, desc(Dist))
+util <- arrange(util, desc(Dist))
+
+write.csv(diag, file = "diag.csv")
+write.csv(util, file = "util.csv")
