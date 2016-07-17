@@ -56,3 +56,21 @@ util <- arrange(util, desc(Dist))
 
 write.csv(diag, file = "diag.csv")
 write.csv(util, file = "util.csv")
+
+#### ANOVA ####
+# 1 way anova using factor variable ZIP_CODE_3
+diagfit1 <- aov(Dist ~ ZIP_CODE_3, diag)
+summary(diagfit1)
+TukeyHSD(diagfit1)
+
+utilfit1 <- aov(Dist ~ ZIP_CODE_3, util)
+summary(utilfit1)
+TukeyHSD(utilfit1)
+
+ # 2 way anova using factors ZIP_CODE_3 and AGE_GROUP_CODE
+# did not look at util data set because previous analysis showed week correlations
+diagfit2 <- aov(Dist ~ ZIP_CODE_3 * AGE_GROUP_CODE, diag)
+summary(diagfit2)
+TukeyHSD(diagfit2)
+
+
