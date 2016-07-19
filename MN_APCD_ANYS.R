@@ -70,9 +70,14 @@ TukeyHSD(utilfit1)
 
  # 2 way anova using factors ZIP_CODE_3 and AGE_GROUP_CODE
 # did not look at util data set because previous analysis showed week correlations
-diagfit2 <- aov(Dist ~ ZIP_CODE_3 * AGE_GROUP_CODE, diag)
+diagfit2 <- aov(Dist ~ ZIP_CODE_3 + AGE_GROUP_CODE, diag)
 summary(diagfit2)
 Tukd2 <- TukeyHSD(diagfit2)
 Tukd2t <- as.data.frame(Tukd2$ZIP_CODE_3)
 
+# Age group as confounder
+diagfitc2 <- aov(Dist ~ ZIP_CODE_3 * AGE_GROUP_CODE, diag)
+summary(diagfitc2)
+Tukdc2 <- TukeyHSD(diagfitc2)
+Tukd2t <- as.data.frame(Tukd2$ZIP_CODE_3)
 ## Visualization ##
